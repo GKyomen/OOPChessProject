@@ -35,6 +35,11 @@ public class Torre {
     }
 
     public boolean checaMovimento(int linhaOrigem, int colunaOrigem, int linhaDestino, int colunaDestino) {
-        return false;
+        boolean ehAdequado = false;
+        int diffColuna = colunaDestino - colunaOrigem;
+        int diffLinha = linhaDestino - linhaOrigem;
+        if (diffColuna == 0 || diffLinha == 0)
+            ehAdequado = true;
+        return ehAdequado;
     }
 }

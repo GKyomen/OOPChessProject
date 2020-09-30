@@ -35,6 +35,11 @@ public class Bispo {
     }
 
     public boolean checaMovimento(int linhaOrigem, int colunaOrigem, int linhaDestino, int colunaDestino) {
-        return false;
+        boolean ehAdequado = false;
+        int diffColuna = colunaDestino - colunaOrigem;
+        int diffLinha = linhaDestino - linhaOrigem;
+        if ( diffColuna == diffLinha || diffColuna == diffLinha*(-1) )
+            ehAdequado = true;
+        return ehAdequado;
     }             
 }
