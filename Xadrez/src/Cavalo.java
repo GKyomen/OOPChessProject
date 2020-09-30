@@ -27,9 +27,9 @@ public class Cavalo {
         String representacao = "";
         if (this.getStatus()) {
             if (this.getCor() == "preto")
-                representacao = "C+";
-            else 
                 representacao = "C-";
+            else 
+                representacao = "C+";
         }
         return representacao;
     }

@@ -27,9 +27,9 @@ public class Rei {
         String representacao = "";
         if (this.getStatus()) {
             if (this.getCor() == "preto")
-                representacao = "R+";
-            else 
                 representacao = "R-";
+            else 
+                representacao = "R+";
         }
         return representacao;
     }

@@ -27,9 +27,9 @@ public class Dama {
         String representacao = "";
         if (this.getStatus()) {
             if (this.getCor() == "preto")
-                representacao = "D+";
-            else 
                 representacao = "D-";
+            else 
+                representacao = "D+";
         }
         return representacao;
     }

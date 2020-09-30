@@ -27,9 +27,9 @@ public class Torre {
         String representacao = "";
         if (this.getStatus()) {
             if (this.getCor() == "preto")
-                representacao = "T+";
-            else 
                 representacao = "T-";
+            else 
+                representacao = "T+";
         }
         return representacao;
     }

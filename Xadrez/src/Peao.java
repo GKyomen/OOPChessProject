@@ -27,9 +27,9 @@ public class Peao {
         String representacao = "";
         if (this.getStatus()) {
             if (this.getCor() == "preto")
-                representacao = "P+";
-            else 
                 representacao = "P-";
+            else 
+                representacao = "P+";
         }
         return representacao;
     }
@@ -40,15 +40,15 @@ public class Peao {
         int diffLinha = linhaDestino - linhaOrigem;
         if (diffColuna == 0) {
             if (this.getCor() == "preto")
-                if ( (diffLinha == 1) || (diffLinha == 2 && linhaOrigem == 1) ) 
+                if ( (diffLinha == -1) || (diffLinha == -2 && linhaOrigem == 6) ) 
                     ehAdequado = true;
             else
-                if ( (diffLinha == -1) || (diffLinha == -2 && linhaOrigem == 6) )
+                if ( (diffLinha == 1) || (diffLinha == 2 && linhaOrigem == 1) )
                     ehAdequado = true;
         } else if (diffColuna == 1 || diffColuna == -1) {
-            if (this.getCor() == "preto" && diffLinha == 1)
+            if (this.getCor() == "preto" && diffLinha == -1)
                 ehAdequado = true;
-            else if (this.getCor() == "branco" && diffLinha == -1)
+            else if (this.getCor() == "branco" && diffLinha == 1)
                 ehAdequado = true;
         }
         return ehAdequado;

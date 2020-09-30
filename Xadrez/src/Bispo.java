@@ -27,9 +27,9 @@ public class Bispo {
         String representacao = "";
         if (this.getStatus()) {
             if (this.getCor() == "preto")
-                representacao = "B+";
-            else 
                 representacao = "B-";
+            else 
+                representacao = "B+";
         }
         return representacao;
     }
