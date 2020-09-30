@@ -15,7 +15,7 @@ public class Posicao {
         return cor;
     }
 
-    public void setCor(String cor) {
+    private void setCor(String cor) {
         this.cor = cor;
     }
 
@@ -23,7 +23,7 @@ public class Posicao {
         return linha;
     }
 
-    public void setLinha(int linha) {
+    private void setLinha(int linha) {
         this.linha = linha;
     }
 
@@ -31,7 +31,7 @@ public class Posicao {
         return coluna;
     }
 
-    public void setColuna(char coluna) {
+    private void setColuna(char coluna) {
         this.coluna = coluna;
     }
 

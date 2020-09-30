@@ -11,7 +11,7 @@ public class Bispo {
         return cor;
     }
 
-    public void setCor(String cor) {
+    private void setCor(String cor) {
         this.cor = cor;
     }
 
