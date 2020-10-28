@@ -23,4 +23,16 @@ public class Tabuleiro {
             }
         }
     }
+
+    public void desenhaTabuleiro() {
+        for (Posicao[] linha : posicoes) {
+            for (Posicao posicao : linha) {
+                if(posicao.getOcupada())
+                    System.out.print(" O");
+                else
+                    System.out.print(" X");
+            }
+            System.out.println("");
+        }
+    }
 }
