@@ -5,10 +5,6 @@ public class Tabuleiro {
         inicializaTabuleiro();
     }
 
-    public Posicao[][] getPosicoes() {
-        return posicoes;
-    }
-
     private void inicializaTabuleiro() {
         char coluna;
         int linha;
@@ -16,9 +12,9 @@ public class Tabuleiro {
             linha = 7 - i;
             for (int j = 0; j < 8; j++) {
                 coluna = (char) (j + 'a'); //usando ASCII para saber a letra da coluna
-                this.getPosicoes()[i][j] = new Posicao(linha, coluna);
+                this.posicoes[i][j] = new Posicao(linha, coluna);
                 if (i == 0 || i == 1 || i == 6 || i == 7) {
-                    this.getPosicoes()[i][j].setOcupada(true);
+                    this.posicoes[i][j].setOcupada(true);
                 }
             }
         }
