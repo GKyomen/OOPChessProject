@@ -1,6 +1,12 @@
 public class Teste {
     public static void main(String[] args) {
-        
+        Jogo jogo1 = new Jogo(true);
+        Jogo jogo2 = new Jogo(false);
+        System.out.println("O jogo 1 está na vez do jogador 1? " + jogo1.getEhVezDoJogador1());
+        System.out.println("O jogo 2 está na vez do jogador 1? " + jogo2.getEhVezDoJogador1());
+        jogo2.iniciaJogo();
+        System.out.println("O jogo 2 está na vez do jogador 1? " + jogo2.getEhVezDoJogador1());
+
     }
 
     public void todosTestes() {
@@ -233,5 +239,37 @@ public class Teste {
         System.out.println(rb.desenho());
 
         System.out.println("Fim da tentativa");
+
+        /*----- teste 8 -----*/
+        Posicao[][] posicoes = new Posicao[8][8];
+        char coluna;
+        int linha;
+        boolean ocupada = false;
+        for (int i = 0; i < 8; i++) {
+            linha = 7 - i;
+            for (int j = 0; j < 8; j++) {
+                coluna = (char) (j + 'a'); //usando ASCII para saber a letra da coluna
+                posicoes[i][j] = new Posicao(linha, coluna);
+                if(ocupada) {
+                    posicoes[i][j].setOcupada(ocupada);
+                }
+                ocupada = !ocupada;
+                System.out.println("POSICAO:");
+                System.out.println("Coordenadas: " + posicoes[i][j].getLinha() + "ª linha, coluna " + posicoes[i][j].getColuna());
+                System.out.println("Cor: " + posicoes[i][j].getCor());
+                System.out.println("Está ocupada? " + posicoes[i][j].getOcupada());
+            }
+        }
+
+        /*----- teste 9 -----*/
+        Tabuleiro tab = new Tabuleiro();
+        tab.desenhaTabuleiro();
+        for (int i = -1; i < 9; i++) {
+            for (int j = -1; j < 9; j++) {
+                if(!tab.checaDestino(i, (char) (j + 'a'))) {
+                    System.out.println("(" + i + ", " + (char) (j + 'a') + ") não está nos limites.");
+                }                
+            }
+        }
     }
 }

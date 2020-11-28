@@ -31,4 +31,13 @@ public class Tabuleiro {
             System.out.println("");
         }
     }
+
+    public boolean checaDestino(int linhaDestino, char colunaDestino) {
+        int l = linhaDestino, c = (int) (colunaDestino - 'a');
+        if(l >= 0 && l <= 7 && c >= 0 && c <= 7) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

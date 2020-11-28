@@ -16,4 +16,8 @@ public class Jogo {
             this.ehVezDoJogador1 = true;
         }
     }
+
+    public boolean getEhVezDoJogador1() {
+        return this.ehVezDoJogador1;
+    }
 }

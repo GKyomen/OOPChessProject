@@ -20,7 +20,7 @@ public class Posicao {
     }
 
     public int getLinha() {
-        return linha;
+        return (linha + 1);
     }
 
     private void setLinha(int linha) {
@@ -48,10 +48,10 @@ public class Posicao {
         boolean auxiliar = false;
         int numColuna = this.getColuna() - 97; //utilizando a tabela ASCII para calcular o número da coluna
         loopLinha:
-        for (int i = 0; i < 8; i++) {
+        for (int i = 7; i >= 0; i--) {
             for (int j = 0; j < 8; j++) {
                 auxiliar = !auxiliar;
-                if (i == this.getLinha() && j == numColuna) {
+                if (i == (this.getLinha() - 1) && j == numColuna) {
                     break loopLinha;
                 }
             }
