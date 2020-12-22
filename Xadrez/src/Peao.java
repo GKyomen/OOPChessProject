@@ -23,10 +23,10 @@ public class Peao extends Peca{
         int diffLinha = linhaDestino - linhaOrigem;
         if(diffColuna == 0) {
             if(this.getCor() == "preto") {
-                if((diffLinha == -1) || (diffLinha == -2 && linhaOrigem == 6)) 
+                if((diffLinha == -1) || (diffLinha == -2 && linhaOrigem == 7)) 
                     ehAdequado = true;
             } else {
-                if((diffLinha == 1) || (diffLinha == 2 && linhaOrigem == 1))
+                if((diffLinha == 1) || (diffLinha == 2 && linhaOrigem == 2))
                     ehAdequado = true;
             }
         } else if(diffColuna == 1 || diffColuna == -1) {

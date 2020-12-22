@@ -77,7 +77,7 @@ public class Tabuleiro {
 
     // verifica se um movimento é possivel
     private boolean verificaMovimento(Posicao origem, Posicao destino, int deltaL, int deltaC, String corPeca, String corAtacante, int estadoDoJogo) {
-        //transforma as coordenadas em número e salva as diferenças
+        //transforma as coordenadas em número
         int lOrigem = origem.getLinha() - 1, cOrigem = (int) (origem.getColuna() - 'a'),
             lDestino = destino.getLinha() - 1, cDestino = (int) (destino.getColuna() - 'a');
 
@@ -165,7 +165,7 @@ public class Tabuleiro {
 
         //procura o rei atacado e vê se tem fuga (se tiver fuga não é xeque-mate)
         Posicao pRei = procuraRei(corAtacado);
-        int lin = pRei.getLinha() - 1, col = (int) pRei.getColuna() - 'a';
+        int lin = 8 - pRei.getLinha(), col = (int) pRei.getColuna() - 'a';
         for(int i = lin + 1; i >= (lin - 1); i--) 
             for(int j = col - 1; j <= (col + 1); j++) 
                 if(!estaAtacada(this.posicoes[i][j], corAtacante)) 
@@ -205,22 +205,22 @@ public class Tabuleiro {
                             return false;
                     }
                 case "ds":
-                    for(int i = lin + 1, j = col + 1; i < 8; i++, j++) {
+                    for(int i = lin + 1, j = col + 1; i < 8 && j < 8; i++, j++) {
                         if(xequeDescoberto(pRei, this.posicoes[i][j], corAtacado) == false)
                             return false;
                     }
                 case "dd":
-                    for(int i = lin - 1, j = col + 1; i >= 0; i--, j++) {
+                    for(int i = lin - 1, j = col + 1; i >= 0 && j < 8; i--, j++) {
                         if(xequeDescoberto(pRei, this.posicoes[i][j], corAtacado) == false)
                             return false;
                     }
                 case "es":
-                    for(int i = lin + 1, j = col - 1; i < 8; i++, j--) {
+                    for(int i = lin + 1, j = col - 1; i < 8 && j >= 0; i++, j--) {
                         if(xequeDescoberto(pRei, this.posicoes[i][j], corAtacado) == false)
                             return false;
                     }
                 case "ed":
-                    for(int i = lin - 1, j = col - 1; i >= 0; i--, j--) {
+                    for(int i = lin - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
                         if(xequeDescoberto(pRei, this.posicoes[i][j], corAtacado) == false)
                             return false;
                     }
@@ -378,8 +378,8 @@ public class Tabuleiro {
 
     //verifica se uma posicao está atacada a partir de uma certa direção
     private boolean estaAtacadaNaDirecao(Posicao p, String corAtacante, String direcao) {
-        //transforma as coordenadas em número
-        int lin = p.getLinha() - 1, col = (int) (p.getColuna() - 'a');
+        //transforma as coordenadas em número que serão usados na matriz
+        int lin = 8 - p.getLinha(), col = (int) (p.getColuna() - 'a');
 
         switch(direcao) {
             case "hd":
@@ -427,7 +427,7 @@ public class Tabuleiro {
                 }
                 return false;
             case "ds":
-                for(int i = lin + 1, j = col + 1; i < 8; i++, j++) {
+                for(int i = lin + 1, j = col + 1; i < 8 && j < 8; i++, j++) {
                     if(this.posicoes[i][j].getOcupada()) {
                         if(this.posicoes[i][j].getPeca().getCor() == corAtacante)
                             if(atacaNaDirecao(this.posicoes[i][j].getPeca(), direcao))
@@ -437,7 +437,7 @@ public class Tabuleiro {
                 }
                 return false;
             case "dd":
-                for(int i = lin - 1, j = col + 1; i >= 0; i--, j++) {
+                for(int i = lin - 1, j = col + 1; i >= 0 && j < 8; i--, j++) {
                     if(this.posicoes[i][j].getOcupada()) {
                         if(this.posicoes[i][j].getPeca().getCor() == corAtacante)
                             if(atacaNaDirecao(this.posicoes[i][j].getPeca(), direcao))
@@ -447,7 +447,7 @@ public class Tabuleiro {
                 }
                 return false;
             case "es":
-                for(int i = lin + 1, j = col - 1; i < 8; i++, j--) {
+                for(int i = lin + 1, j = col - 1; i < 8 && j >= 0; i++, j--) {
                     if(this.posicoes[i][j].getOcupada()) {
                         if(this.posicoes[i][j].getPeca().getCor() == corAtacante)
                             if(atacaNaDirecao(this.posicoes[i][j].getPeca(), direcao))
@@ -457,7 +457,7 @@ public class Tabuleiro {
                 }
                 return false;
             case "ed":
-                for(int i = lin - 1, j = col - 1; i >= 0; i--, j--) {
+                for(int i = lin - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
                     if(this.posicoes[i][j].getOcupada()) {
                         if(this.posicoes[i][j].getPeca().getCor() == corAtacante)
                             if(atacaNaDirecao(this.posicoes[i][j].getPeca(), direcao))
@@ -478,9 +478,9 @@ public class Tabuleiro {
         if(c == "c") //caminho sempre está livre para o cavalo
             return true;
 
-        //transforma as coordenadas em número
-        int lInicio = inicio.getLinha() - 1, cInicio = (int) (inicio.getColuna() - 'a'),
-            lFim = fim.getLinha() - 1, cFim = (int) (fim.getColuna() - 'a');
+        //transforma as coordenadas em número que serão usados na matriz
+        int lInicio = 8 - inicio.getLinha(), cInicio = (int) (inicio.getColuna() - 'a'),
+            lFim = 8 - fim.getLinha(), cFim = (int) (fim.getColuna() - 'a');
 
         switch(c) {
             //percorre o caminho se ele for um dos eixos, retornando falso se alguma posicao no meio está ocupada
@@ -497,37 +497,37 @@ public class Tabuleiro {
                 }   
                 break;
             case "vd":
-                for(int i = lInicio - 1; i > lFim; i--) {
-                    if(this.posicoes[i][cFim].getOcupada())
-                        return false;
-                }
-                break;
-            case "vs":
                 for(int i = lInicio + 1; i < lFim; i++) {
                     if(this.posicoes[i][cFim].getOcupada())
                         return false;
                 }
                 break;
+            case "vs":
+                for(int i = lInicio - 1; i > lFim; i--) {
+                    if(this.posicoes[i][cFim].getOcupada())
+                        return false;
+                }
+                break;
             case "ds":
-                for(int i = lInicio + 1, j = cInicio + 1; i < lFim; i++, j++) {
+                for(int i = lInicio - 1, j = cInicio + 1; i > lFim && j < cFim; i--, j++) {
                     if(this.posicoes[i][j].getOcupada())
                         return false;
                 }
                 break;
             case "dd":
-                for(int i = lInicio - 1, j = cInicio + 1; i > lFim; i--, j++) {
+                for(int i = lInicio + 1, j = cInicio + 1; i < lFim && j < cFim; i++, j++) {
                     if(this.posicoes[i][j].getOcupada())
                         return false;
                 }
                 break;
             case "es":
-                for(int i = lInicio + 1, j = cInicio - 1; i < lFim; i++, j--) {
+                for(int i = lInicio - 1, j = cInicio - 1; i > lFim && j > cFim; i--, j--) {
                     if(this.posicoes[i][j].getOcupada())
                         return false;
                 }
                 break;
             case "ed":
-                for(int i = lInicio - 1, j = cInicio - 1; i > lFim; i--, j--) {
+                for(int i = lInicio + 1, j = cInicio - 1; i < lFim && j > cFim; i++, j--) {
                     if(this.posicoes[i][j].getOcupada())
                         return false;
                 }

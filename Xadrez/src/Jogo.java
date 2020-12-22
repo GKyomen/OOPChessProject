@@ -26,8 +26,8 @@ public class Jogo {
         this.pecas[0] = new Torre("preto");
         this.pecas[1] = new Cavalo("preto");
         this.pecas[2] = new Bispo("preto");
-        this.pecas[3] = new Rei("preto");
-        this.pecas[4] = new Dama("preto");
+        this.pecas[3] = new Dama("preto");
+        this.pecas[4] = new Rei("preto");
         this.pecas[5] = new Bispo("preto");
         this.pecas[6] = new Cavalo("preto");
         this.pecas[7] = new Torre("preto");
@@ -38,8 +38,8 @@ public class Jogo {
         this.pecas[24] = new Torre("branco");
         this.pecas[25] = new Cavalo("branco");
         this.pecas[26] = new Bispo("branco");
-        this.pecas[27] = new Rei("branco");
-        this.pecas[28] = new Dama("branco");
+        this.pecas[27] = new Dama("branco");
+        this.pecas[28] = new Rei("branco");
         this.pecas[29] = new Bispo("branco");
         this.pecas[30] = new Cavalo("branco");
         this.pecas[31] = new Torre("branco");
@@ -93,7 +93,7 @@ public class Jogo {
 
                 //imprime algo caso ocorra uma mudança significativa ou seja uma jogada inválida
                 jogada = this.tabuleiro.movimentar(linhaOrigem, colunaOrigem, linhaDestino, colunaDestino, corPeca, this.estadoDoJogo, this.pecas);
-                if(jogada == -1) {
+                if(jogada == -1) { 
                     System.out.println("Jogada inválida. Insira outras coordenadas: ");
                 } else if(jogada == 0) {
                     this.ehVezDoJogador1 = !this.ehVezDoJogador1;
