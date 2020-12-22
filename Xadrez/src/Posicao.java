@@ -3,12 +3,14 @@ public class Posicao {
     private int linha;
     private char coluna;
     private boolean ocupada;
+    private Peca peca;
 
     public Posicao(int linha, char coluna) {
         this.setLinha(linha);
         this.setColuna(coluna);
         this.setCor(this.defineCor());
         this.setOcupada(false);
+        this.setPeca(null);
     }
 
     public String getCor() {
@@ -41,6 +43,14 @@ public class Posicao {
 
     public void setOcupada(boolean ocupada) {
         this.ocupada = ocupada;
+    }
+
+    public Peca getPeca() {
+        return this.peca;
+    }
+
+    public void setPeca(Peca p) {
+        this.peca = p;
     }
 
     private String defineCor() {
