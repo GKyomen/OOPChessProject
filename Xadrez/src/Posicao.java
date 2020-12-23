@@ -8,17 +8,13 @@ public class Posicao {
     public Posicao(int linha, char coluna) {
         this.setLinha(linha);
         this.setColuna(coluna);
-        this.setCor(this.defineCor());
+        this.defineCor();
         this.setOcupada(false);
         this.setPeca(null);
     }
 
     public String getCor() {
         return cor;
-    }
-
-    private void setCor(String cor) {
-        this.cor = cor;
     }
 
     public int getLinha() {
@@ -53,8 +49,7 @@ public class Posicao {
         this.peca = p;
     }
 
-    private String defineCor() {
-        String cor;
+    private void defineCor() {
         boolean auxiliar = false;
         int numColuna = this.getColuna() - 97; //utilizando a tabela ASCII para calcular o número da coluna
         loopLinha:
@@ -68,9 +63,8 @@ public class Posicao {
             auxiliar = !auxiliar; //troca pra cada linha começar com uma cor diferente
         }
         if (auxiliar)
-            cor = "branco";
+            this.cor = "branco";
         else
-            cor = "preto";
-        return cor;
+            this.cor = "preto";
     }
 }
