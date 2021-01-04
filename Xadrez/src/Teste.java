@@ -6,7 +6,6 @@ public class Teste {
         System.out.println("O jogo 2 está na vez do jogador 1? " + jogo2.getEhVezDoJogador1());
         jogo2.iniciaJogo();
         System.out.println("O jogo 2 está na vez do jogador 1? " + jogo2.getEhVezDoJogador1()); */
-
     }
 
     /* public void todosTestes() {

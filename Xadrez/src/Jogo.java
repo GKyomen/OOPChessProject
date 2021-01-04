@@ -48,13 +48,18 @@ public class Jogo {
         this.tabuleiro = new Tabuleiro(this.pecas);
 
         //inicializa os jogadores
-        for (int i = 0; i < 16; i++)
-            brancas[i] = this.pecas[i];
+        for (int i = 0; i < 16; i++) //as primeiras 16 peças são pretas
+            pretas[i] = this.pecas[i];
+        this.jogadores[1] = new Jogador(jPretas, 2, pretas);
+            
+        for (int i = 16; i < 32; i++)
+            brancas[i - 16] = this.pecas[i]; //as 16 últimas peças são brancas
         this.jogadores[0] = new Jogador(jBrancas, 1, brancas);
 
-        for (int i = 16; i < 32; i++)
-            pretas[i - 16] = this.pecas[i];
-        this.jogadores[1] = new Jogador(jPretas, 2, pretas);
+        //mostra as informações dos jogadores
+        System.out.println("Informações dos Jogadores:");
+        for(Jogador j : jogadores)
+            j.infoJogador();
     }
 
     private void jogar() {
@@ -78,7 +83,8 @@ public class Jogo {
                 jogador = this.jogadores[1].getNome();
             }
 
-            System.out.println(jogador + ", por favor, informe as coordenas da sua jogada: (informe q 0 q 0 para desistir)");
+            System.out.println(jogador + ", por favor, informe as coordenas da sua jogada, sendo um dígito por linha (coluna, linha, coluna, linha):");
+            System.out.println("(informe q 0 q 0 para desistir)");
 
             do{ //pede uma jogada até que ela seja válida
                 colunaOrigem = teclado.next().charAt(0);
@@ -104,10 +110,16 @@ public class Jogo {
                     this.estadoDoJogo = 1;
                 } else if(jogada == 2) {
                     System.out.println("Xeque-mate! Fim de jogo, parabéns " + jogador + " pela vitória");
+                    System.out.println("-------------Tabuleiro Final-------------\n");
+                    this.tabuleiro.desenhaTabuleiro();
+                    System.out.println("");
                     this.estadoDoJogo = 2;
                     break jogo;
                 } else if(jogada == 3) {
                     System.out.println("Fim de jogo por insuficiência material.");
+                    System.out.println("-------------Tabuleiro Final-------------\n");
+                    this.tabuleiro.desenhaTabuleiro();
+                    System.out.println("");
                     this.estadoDoJogo = 3;
                     break jogo;
                 }

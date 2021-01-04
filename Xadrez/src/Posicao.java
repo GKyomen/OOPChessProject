@@ -18,7 +18,7 @@ public class Posicao {
     }
 
     public int getLinha() {
-        return (linha + 1);
+        return linha;
     }
 
     private void setLinha(int linha) {

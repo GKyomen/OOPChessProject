@@ -21,9 +21,7 @@ public class Rei extends Peca {
         boolean ehAdequado = false;
         int diffColuna = colunaDestino - colunaOrigem;
         int diffLinha = linhaDestino - linhaOrigem;
-        if((diffColuna == 0 && (diffLinha == 1 || diffLinha == -1)) || (diffLinha == 0 && (diffColuna == 1 || diffColuna == -1)))
-            ehAdequado = true;
-        else if((diffColuna == diffLinha || diffColuna == diffLinha*(-1)) && (diffLinha == 1 || diffLinha == -1))
+        if((diffColuna == 1 || diffColuna == 0 || diffColuna == -1) && (diffLinha == 1 || diffLinha == 0 || diffLinha == -1))
             ehAdequado = true;
         return ehAdequado;
     }         
