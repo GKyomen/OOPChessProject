@@ -26,7 +26,7 @@ public class Tabuleiro {
     public void desenhaTabuleiro() {
         int i = 8;
         System.out.println(" a   b   c   d   e   f   g   h\n");
-        for(Posicao[] linha : posicoes) {
+        for(Posicao[] linha : this.posicoes) {
             for(Posicao posicao : linha) {
                 if(posicao.getOcupada()) 
                 System.out.print(" " + posicao.getPeca().desenho() + " ");
@@ -40,11 +40,7 @@ public class Tabuleiro {
 
     //verifica se uma posição está dentro do tabuleiro
     public boolean checaPosicao(int linha, int coluna) {
-        if(linha >= 0 && linha <= 7 && coluna >= 0 && coluna <= 7) {
-            return true;
-        } else {
-            return false;
-        }
+        return (linha >= 0 && linha <= 7 && coluna >= 0 && coluna <= 7);
     }
   
     //função que vai efetivamente fazer o movimento da peça
@@ -102,7 +98,7 @@ public class Tabuleiro {
     }
 
     //verifica se o caminho entre duas posições está livre
-    private boolean caminhoLivre(Posicao inicio, Posicao fim) {
+    private boolean caminhoLivre(Posicao inicio, Posicao fim, Posicao[][] posicoes) {
         String c = qualCaminho(inicio, fim); //descobre o caminho
 
         if(c == "c") //caminho sempre está livre para o cavalo
@@ -116,49 +112,49 @@ public class Tabuleiro {
             //percorre o caminho se ele for um dos eixos, retornando falso se alguma posicao no meio está ocupada
             case "hd":
                 for(int i = cInicio + 1; i < cFim; i++) {
-                    if(this.posicoes[lFim][i].getOcupada())
+                    if(posicoes[lFim][i].getOcupada())
                         return false;
                 }
                 break;
             case "he":
                 for(int i = cInicio - 1; i > cFim; i--) {
-                    if(this.posicoes[lFim][i].getOcupada())
+                    if(posicoes[lFim][i].getOcupada())
                         return false;
                 }   
                 break;
             case "vd":
                 for(int i = lInicio + 1; i < lFim; i++) {
-                    if(this.posicoes[i][cFim].getOcupada())
+                    if(posicoes[i][cFim].getOcupada())
                         return false;
                 }
                 break;
             case "vs":
                 for(int i = lInicio - 1; i > lFim; i--) {
-                    if(this.posicoes[i][cFim].getOcupada())
+                    if(posicoes[i][cFim].getOcupada())
                         return false;
                 }
                 break;
             case "ds":
                 for(int i = lInicio - 1, j = cInicio + 1; i > lFim && j < cFim; i--, j++) {
-                    if(this.posicoes[i][j].getOcupada())
+                    if(posicoes[i][j].getOcupada())
                         return false;
                 }
                 break;
             case "dd":
                 for(int i = lInicio + 1, j = cInicio + 1; i < lFim && j < cFim; i++, j++) {
-                    if(this.posicoes[i][j].getOcupada())
+                    if(posicoes[i][j].getOcupada())
                         return false;
                 }
                 break;
             case "es":
                 for(int i = lInicio - 1, j = cInicio - 1; i > lFim && j > cFim; i--, j--) {
-                    if(this.posicoes[i][j].getOcupada())
+                    if(posicoes[i][j].getOcupada())
                         return false;
                 }
                 break;
             case "ed":
                 for(int i = lInicio + 1, j = cInicio - 1; i < lFim && j > cFim; i++, j--) {
-                    if(this.posicoes[i][j].getOcupada())
+                    if(posicoes[i][j].getOcupada())
                         return false;
                 }
                 break;
@@ -192,7 +188,7 @@ public class Tabuleiro {
     }
 
     //verifica se alguma peça de uma cor está atacando uma determinada posição
-    private boolean estaAtacada(Posicao p, String corAtacante) {
+    private boolean estaAtacada(Posicao p, String corAtacante, Posicao[][] posicoes) {
         //para cada posicao no tabuleiro
         for(Posicao[] linhas : posicoes) {
             for(Posicao pos : linhas) {
@@ -209,7 +205,7 @@ public class Tabuleiro {
                             //se é um rei e tem no máximo uma casa de distância ou se não é um rei
                             if((pos.getPeca() instanceof Rei && ((dLinha == 1 || dLinha == 0 || dLinha == -1) && (dColuna == 1 || dColuna == 0 || dColuna == -1))) || !(pos.getPeca() instanceof Rei))
                                 //se o caminho está livre, sim, a posição está atacada
-                                if(caminhoLivre(pos, p))
+                                if(caminhoLivre(pos, p, posicoes))
                                     return true;
             }
         }
@@ -218,7 +214,7 @@ public class Tabuleiro {
     }
 
     //retorna as posições das peças encontradas que atacam uma posição
-    private Posicao[] posicaoAtacante(Posicao p, String corAtacante) {
+    private Posicao[] posicaoAtacante(Posicao p, String corAtacante, Posicao[][] posicoes) {
         int nAtacantes = 0;
         Posicao[] aux = new Posicao[16];
         //para cada posicao no tabuleiro
@@ -229,7 +225,7 @@ public class Tabuleiro {
                     //se a peça ataca na direção entre as posicoes
                     if(atacaNaDirecao(pos.getPeca(), qualCaminho(pos, p)))
                         //se o caminho está livre, sim, a posição está atacada por essa peça
-                        if(caminhoLivre(pos, p))
+                        if(caminhoLivre(pos, p, posicoes))
                             aux[nAtacantes++] = pos;
         
         //cria um array do tamanho exato do número de atacantes, salva os atacantes e retorna
@@ -240,16 +236,16 @@ public class Tabuleiro {
     }
 
     //verifica se uma posicao está atacada a partir de uma certa direção
-    private boolean estaAtacadaNaDirecao(Posicao p, String corAtacante, String direcao) {
+    private boolean estaAtacadaNaDirecao(Posicao p, String corAtacante, String direcao, Posicao[][] posicoes) {
         //transforma as coordenadas em número que serão usados na matriz
         int lin = 8 - p.getLinha(), col = (int) (p.getColuna() - 'a');
 
         switch(direcao) {
             case "hd":
                 for(int i = col + 1; i < 8; i++) {
-                    if(this.posicoes[lin][i].getOcupada()) {
-                        if(this.posicoes[lin][i].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(this.posicoes[lin][i].getPeca(), direcao))
+                    if(posicoes[lin][i].getOcupada()) {
+                        if(posicoes[lin][i].getPeca().getCor() == corAtacante)
+                            if(atacaNaDirecao(posicoes[lin][i].getPeca(), direcao))
                                 return true;
 
                         break;
@@ -258,9 +254,9 @@ public class Tabuleiro {
                 return false;
             case "he":
                 for(int i = col - 1; i >= 0; i--) {
-                    if(this.posicoes[lin][i].getOcupada()) {
-                        if(this.posicoes[lin][i].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(this.posicoes[lin][i].getPeca(), direcao))
+                    if(posicoes[lin][i].getOcupada()) {
+                        if(posicoes[lin][i].getPeca().getCor() == corAtacante)
+                            if(atacaNaDirecao(posicoes[lin][i].getPeca(), direcao))
                                 return true;
 
                         break;
@@ -269,9 +265,9 @@ public class Tabuleiro {
                 return false;
             case "vd":
                 for(int i = lin + 1; i < 8; i++) {
-                    if(this.posicoes[i][col].getOcupada()) {
-                        if(this.posicoes[i][col].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(this.posicoes[i][col].getPeca(), direcao))
+                    if(posicoes[i][col].getOcupada()) {
+                        if(posicoes[i][col].getPeca().getCor() == corAtacante)
+                            if(atacaNaDirecao(posicoes[i][col].getPeca(), direcao))
                                 return true;
 
                         break;
@@ -280,9 +276,9 @@ public class Tabuleiro {
                 return false;
             case "vs":
                 for(int i = lin - 1; i >= 0; i--) {
-                    if(this.posicoes[i][col].getOcupada()) {
-                        if(this.posicoes[i][col].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(this.posicoes[i][col].getPeca(), direcao))
+                    if(posicoes[i][col].getOcupada()) {
+                        if(posicoes[i][col].getPeca().getCor() == corAtacante)
+                            if(atacaNaDirecao(posicoes[i][col].getPeca(), direcao))
                                 return true;
 
                         break;
@@ -291,9 +287,9 @@ public class Tabuleiro {
                 return false;
             case "ds":
                 for(int i = lin - 1, j = col + 1; i >= 0 && j < 8; i--, j++) {
-                    if(this.posicoes[i][j].getOcupada()) {
-                        if(this.posicoes[i][j].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(this.posicoes[i][j].getPeca(), direcao))
+                    if(posicoes[i][j].getOcupada()) {
+                        if(posicoes[i][j].getPeca().getCor() == corAtacante)
+                            if(atacaNaDirecao(posicoes[i][j].getPeca(), direcao))
                                 return true;
                         break;
                     }
@@ -301,9 +297,9 @@ public class Tabuleiro {
                 return false;
             case "dd":
                 for(int i = lin + 1, j = col + 1; i < 8 && j < 8; i++, j++) {
-                    if(this.posicoes[i][j].getOcupada()) {
-                        if(this.posicoes[i][j].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(this.posicoes[i][j].getPeca(), direcao))
+                    if(posicoes[i][j].getOcupada()) {
+                        if(posicoes[i][j].getPeca().getCor() == corAtacante)
+                            if(atacaNaDirecao(posicoes[i][j].getPeca(), direcao))
                                 return true;
                         break;
                     }
@@ -311,9 +307,9 @@ public class Tabuleiro {
                 return false;
             case "es":
                 for(int i = lin - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-                    if(this.posicoes[i][j].getOcupada()) {
-                        if(this.posicoes[i][j].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(this.posicoes[i][j].getPeca(), direcao))
+                    if(posicoes[i][j].getOcupada()) {
+                        if(posicoes[i][j].getPeca().getCor() == corAtacante)
+                            if(atacaNaDirecao(posicoes[i][j].getPeca(), direcao))
                                 return true;
                         break;
                     }
@@ -321,9 +317,9 @@ public class Tabuleiro {
                 return false;
             case "ed":
                 for(int i = lin + 1, j = col - 1; i < 8 && j >= 0; i++, j--) {
-                    if(this.posicoes[i][j].getOcupada()) {
-                        if(this.posicoes[i][j].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(this.posicoes[i][j].getPeca(), direcao))
+                    if(posicoes[i][j].getOcupada()) {
+                        if(posicoes[i][j].getPeca().getCor() == corAtacante)
+                            if(atacaNaDirecao(posicoes[i][j].getPeca(), direcao))
                                 return true;
                         break;
                     }
@@ -335,7 +331,7 @@ public class Tabuleiro {
     }
 
     //função que retorna a posição do rei de uma determinada cor
-    private Posicao procuraRei(String cor) {
+    private Posicao procuraRei(String cor, Posicao[][] posicoes) {
         for(Posicao[] linhas : posicoes)
             for(Posicao p : linhas)
                 if(p.getOcupada())
@@ -346,22 +342,19 @@ public class Tabuleiro {
 
     // verifica se o jogo está em xeque (Se quem moveu foram as brancas, verifica se
     // as pretas estão em xeque e vice-versa)
-    private boolean verificaXeque(String corAtacante) {
-        //salva a cor de quem está sendo atacado
-        String corAtacado = corAtacante == "branco" ? "preto" : "branco";
-
-        //procura o rei atacado e vê se a casa dele está atacada
-        return estaAtacada(procuraRei(corAtacado), corAtacante);
+    private boolean verificaXeque(String corAtacante, Posicao pRei, Posicao[][] posicoes) {
+        //vê se a casa do rei atacado está atacada
+        return estaAtacada(pRei, corAtacante, posicoes);
     }
 
     //verifica se a posição do rei de uma determinada cor fica desprotegida ao realizar um movimento para uma posição objetivo
     //retorna falso se pelo menos um movimento não desprotege a casa do rei
-    private boolean xequeDescoberto(Posicao posRei, Posicao objetivo, String corPeca) {
+    private boolean xequeDescoberto(Posicao posRei, Posicao objetivo, String corPeca, Posicao[][] posicoes) {
         String corAtacante = corPeca == "branco" ? "preto" : "branco";
         //pega referência para todas as posições que possuem uma peça da cor do rei que conseguem ir até o objetivo
-        Posicao[] atacaObjetivo = posicaoAtacante(objetivo, corPeca);
+        Posicao[] atacaObjetivo = posicaoAtacante(objetivo, corPeca, posicoes);
         for (Posicao pos : atacaObjetivo) { //para cada uma dessas posições
-            if(!estaAtacadaNaDirecao(pos, corAtacante, qualCaminho(posRei, pos))) { //se o rei não está atacado na direção entre ele e essa posição, o movimento não desprotege o rei
+            if(!estaAtacadaNaDirecao(pos, corAtacante, qualCaminho(posRei, pos), posicoes)) { //se o rei não está atacado na direção entre ele e essa posição, o movimento não desprotege o rei
                 return false;
             }
         }
@@ -369,24 +362,24 @@ public class Tabuleiro {
     }
     
     //verifica se o jogo está em xeque-mate (Se quem moveu foram as brancas, verifica se as pretas estão em xeque-mate e vice-versa)
-    private boolean verificaXequeMate(String corAtacante) {
+    private boolean verificaXequeMate(String corAtacante, Posicao[][] posicoes) {
         //salca a cor de quem está sendo atacado
         String corAtacado = corAtacante == "branco" ? "preto" : "branco";
 
         //procura o rei atacado e vê se tem fuga (se tiver fuga não é xeque-mate)
-        Posicao pRei = procuraRei(corAtacado);
+        Posicao pRei = procuraRei(corAtacado, posicoes);
         int lin = 8 - pRei.getLinha(), col = (int) pRei.getColuna() - 'a';
         for(int i = lin - 1; i <= (lin + 1); i++) 
             for(int j = col - 1; j <= (col + 1); j++) 
                 if(checaPosicao(i, j))
-                    if(!this.posicoes[i][j].getOcupada() && !estaAtacada(this.posicoes[i][j], corAtacante)) 
+                    if(!posicoes[i][j].getOcupada() && !estaAtacada(posicoes[i][j], corAtacante, posicoes)) 
                         return false;
         
         //verifica se alguma peça pode capturar o atacante sem descobrir o rei
-        Posicao posAtacante[] = posicaoAtacante(pRei, corAtacante);
-        if(posAtacante.length == 1 && estaAtacada(posAtacante[0], corAtacado)) { //só é possível se só tiver um atacante
+        Posicao posAtacante[] = posicaoAtacante(pRei, corAtacante, posicoes);
+        if(posAtacante.length == 1 && estaAtacada(posAtacante[0], corAtacado, posicoes)) { //só é possível se só tiver um atacante
             //verifica se ao atacar não desprotege o rei
-            if(xequeDescoberto(pRei, posAtacante[0], corAtacado) == false)
+            if(xequeDescoberto(pRei, posAtacante[0], corAtacado, posicoes) == false)
                 return false; //se pelo menos um ataque não causa xeque descoberto, não é mate
         }
 
@@ -397,42 +390,42 @@ public class Tabuleiro {
             switch(c) {
                 case "hd":
                     for(int i = col + 1; i < 8; i++) {
-                        if(xequeDescoberto(pRei, this.posicoes[lin][i], corAtacado) == false)
+                        if(xequeDescoberto(pRei, posicoes[lin][i], corAtacado, posicoes) == false)
                             return false;
                     }
                 case "he":
                     for(int i = col - 1; i >= 0; i--) {
-                        if(xequeDescoberto(pRei, this.posicoes[lin][i], corAtacado) == false)
+                        if(xequeDescoberto(pRei, posicoes[lin][i], corAtacado, posicoes) == false)
                             return false;
                     }
                 case "vd":
                     for(int i = lin + 1; i < 8; i++) {
-                        if(xequeDescoberto(pRei, this.posicoes[i][col], corAtacado) == false)
+                        if(xequeDescoberto(pRei, posicoes[i][col], corAtacado, posicoes) == false)
                             return false;
                     }
                 case "vs":
                     for(int i = lin - 1; i >= 0; i--) {
-                        if(xequeDescoberto(pRei, this.posicoes[i][col], corAtacado) == false)
+                        if(xequeDescoberto(pRei, posicoes[i][col], corAtacado, posicoes) == false)
                             return false;
                     }
                 case "ds":
                     for(int i = lin - 1, j = col + 1; i >= 0 && j < 8; i--, j++) {
-                        if(xequeDescoberto(pRei, this.posicoes[i][j], corAtacado) == false)
+                        if(xequeDescoberto(pRei, posicoes[i][j], corAtacado, posicoes) == false)
                             return false;
                     }
                 case "dd":
                     for(int i = lin + 1, j = col + 1; i < 8 && j < 8; i++, j++) {
-                        if(xequeDescoberto(pRei, this.posicoes[i][j], corAtacado) == false)
+                        if(xequeDescoberto(pRei, posicoes[i][j], corAtacado, posicoes) == false)
                             return false;
                     }
                 case "es":
                     for(int i = lin - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-                        if(xequeDescoberto(pRei, this.posicoes[i][j], corAtacado) == false)
+                        if(xequeDescoberto(pRei, posicoes[i][j], corAtacado, posicoes) == false)
                             return false;
                     }
                 case "ed":
                     for(int i = lin + 1, j = col - 1; i < 8 && j >= 0; i++, j--) {
-                        if(xequeDescoberto(pRei, this.posicoes[i][j], corAtacado) == false)
+                        if(xequeDescoberto(pRei, posicoes[i][j], corAtacado, posicoes) == false)
                             return false;
                     }
                 default: //falso para sem caminho 
@@ -477,20 +470,16 @@ public class Tabuleiro {
         for (int i = 0; i < 8; i++) 
             for (int j = 0; j < 8; j++) 
                 tabuleiroAux[i][j] = this.posicoes[i][j];
+
+        //salva as posições recebidas só que no tabuleiro auxiliar
+        Posicao simOrigem = tabuleiroAux[origem.getLinha()][(int) (origem.getColuna() - 'a')];
+        Posicao simDestino = tabuleiroAux[destino.getLinha()][(int) (destino.getColuna() - 'a')];
         
         //faz o movimento desejado
-        //movePeca(origem, destino, corPeca); essa função faz o movimento no tabuleiro original, não pode ser usada aqui
-        /* if(!fim.getOcupada()) {
-            fim.setOcupada(true);
-        } else if(fim.getOcupada() && fim.getPeca().getCor() != corPeca) {
-            fim.getPeca().setStatus(false);
-        }
-        fim.setPeca(inicio.getPeca());
-        inicio.setOcupada(false);
-        inicio.setPeca(null); */
-
+        movePeca(simOrigem, simDestino, corPeca);
+        
         //retorna se o jogo saiu do xeque
-        return ((verificaXeque(corAtacante) || verificaXequeMate(corAtacante)) == false);
+        return ((verificaXeque(corAtacante, procuraRei(corPeca, tabuleiroAux), tabuleiroAux) || verificaXequeMate(corAtacante, tabuleiroAux)) == false);
     }
 
     //realiza um movimento caso seja possível
@@ -513,8 +502,8 @@ public class Tabuleiro {
             //movimenta se for possível, e retorna o novo estado do jogo
             if(verificaMovimento(origem, destino, deltaL, deltaC, corPeca, corAtacante, estadoDoJogo)){
                 movePeca(origem, destino, corPeca);
-                if(verificaXeque(corPeca)) {
-                    if(verificaXequeMate(corPeca)) {
+                if(verificaXeque(corPeca, procuraRei(corAtacante, this.posicoes), this.posicoes)) {
+                    if(verificaXequeMate(corPeca, this.posicoes)) {
                         return 2;
                     }
                     return 1;
@@ -545,17 +534,17 @@ public class Tabuleiro {
             //checa o movimento da peça
             if(origem.getPeca().checaMovimento(lOrigem, cOrigem, lDestino, cDestino)) {
                 //verifica se o caminho está livre
-                if(caminhoLivre(origem, destino)) {
+                if(caminhoLivre(origem, destino, this.posicoes)) {
                     //Se for o Rei: verificar se a casa destino não está atacada
                     if(origem.getPeca() instanceof Rei) {
-                        if(!estaAtacada(destino, corAtacante)) {
+                        if(!estaAtacada(destino, corAtacante, this.posicoes)) {
                             //verifica se a casa destino está livre ou ocupada por uma atacante
                             if(!destino.getOcupada() || (destino.getOcupada() && destino.getPeca().getCor() == corAtacante))
                                 return true;
                         }
                     //Se for outras: verificar se não desprotege o rei
                     } else {
-                        boolean xequeDescoberto = estaAtacadaNaDirecao(origem, corAtacante, qualCaminho(procuraRei(corPeca), origem));
+                        boolean xequeDescoberto = estaAtacadaNaDirecao(origem, corAtacante, qualCaminho(procuraRei(corPeca, this.posicoes), origem), this.posicoes);
                         if(xequeDescoberto) {
                             return false;
                         } else {
