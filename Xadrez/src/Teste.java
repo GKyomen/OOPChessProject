@@ -1,16 +1,15 @@
 public class Teste {
     public static void main(String[] args) {
-        Jogo jogo1 = new Jogo(true);
+        /* Jogo jogo1 = new Jogo(true);
         Jogo jogo2 = new Jogo(false);
         System.out.println("O jogo 1 está na vez do jogador 1? " + jogo1.getEhVezDoJogador1());
         System.out.println("O jogo 2 está na vez do jogador 1? " + jogo2.getEhVezDoJogador1());
         jogo2.iniciaJogo();
-        System.out.println("O jogo 2 está na vez do jogador 1? " + jogo2.getEhVezDoJogador1());
-
+        System.out.println("O jogo 2 está na vez do jogador 1? " + jogo2.getEhVezDoJogador1()); */
     }
 
-    public void todosTestes() {
-        /*----- teste 1 -----*/
+    /* public void todosTestes() {
+        //----- teste 1 -----
         Peao p1 = new Peao("preto");
         Peao p2 = new Peao("branco");
         int movPossiveis = 0;
@@ -48,7 +47,7 @@ public class Teste {
         }
         System.out.println("Total: " + movPossiveis); 
 
-        /*----- teste 2 -----*/
+        //----- teste 2 -----
         Torre t1 = new Torre("preto");
         Torre t2 = new Torre("branco");
 
@@ -86,7 +85,7 @@ public class Teste {
         }
         System.out.println("Total: " + movPossiveis);
 
-        /*----- teste 3 -----*/
+        //----- teste 3 -----
         Cavalo c = new Cavalo("preto");
 
         movPossiveis = 0;
@@ -106,7 +105,7 @@ public class Teste {
         }
         System.out.println("Total: " + movPossiveis);
 
-        /*----- teste 4 -----*/
+        //----- teste 4 -----
         Bispo b1 = new Bispo("preto");
         Bispo b2 = new Bispo("branco");
 
@@ -144,7 +143,7 @@ public class Teste {
         }
         System.out.println("Total: " + movPossiveis);
 
-        /*----- teste 5 -----*/
+        //----- teste 5 -----
         Dama d = new Dama("preto");
 
         movPossiveis = 0;
@@ -164,7 +163,7 @@ public class Teste {
         }
         System.out.println("Total: " + movPossiveis);
 
-        /*----- teste 6 -----*/
+        //----- teste 6 -----
         Rei r = new Rei("preto");
         movPossiveis = 0;
         System.out.println("REI");
@@ -183,7 +182,7 @@ public class Teste {
         }
         System.out.println("Total: " + movPossiveis);
 
-        /*----- teste 7 -----*/
+        //----- teste 7 -----
         Peao pp = new Peao("preto");
         Peao pb = new Peao("branco");
         Torre tp = new Torre("preto");
@@ -240,7 +239,7 @@ public class Teste {
 
         System.out.println("Fim da tentativa");
 
-        /*----- teste 8 -----*/
+        //----- teste 8 -----
         Posicao[][] posicoes = new Posicao[8][8];
         char coluna;
         int linha;
@@ -261,7 +260,7 @@ public class Teste {
             }
         }
 
-        /*----- teste 9 -----*/
+        //----- teste 9 -----
         Tabuleiro tab = new Tabuleiro();
         tab.desenhaTabuleiro();
         for (int i = -1; i < 9; i++) {
@@ -271,5 +270,5 @@ public class Teste {
                 }                
             }
         }
-    }
+    } */
 }

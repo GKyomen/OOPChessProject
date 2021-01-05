@@ -1,28 +1,10 @@
-public class Cavalo {
-    private String cor;
-    private boolean status;
-    
+public class Cavalo extends Peca {
+
     public Cavalo(String cor) {
-        this.setCor(cor);
-        this.setStatus(true);
+        super(cor);
     }
 
-    public String getCor() {
-        return cor;
-    }
-
-    private void setCor(String cor) {
-        this.cor = cor;
-    }
-
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
+    @Override
     public String desenho() {
         String representacao = "";
         if (this.getStatus()) {
@@ -34,18 +16,14 @@ public class Cavalo {
         return representacao;
     }
 
+    @Override
     public boolean checaMovimento(int linhaOrigem, int colunaOrigem, int linhaDestino, int colunaDestino) {
-        if(linhaOrigem < 0 || colunaOrigem < 0 || linhaDestino < 0 || colunaDestino < 0 ||
-            linhaOrigem > 7 || colunaOrigem > 7 || linhaDestino > 7 || colunaDestino > 7 ||
-            (linhaOrigem == linhaDestino && colunaOrigem == colunaDestino)) {
-            return false;
-        }
         boolean ehAdequado = false;
         int diffColuna = colunaDestino - colunaOrigem;
         int diffLinha = linhaDestino - linhaOrigem;
-        if ( (diffColuna == 1 || diffColuna == -1) && (diffLinha == 2 || diffLinha == -2) ) 
+        if((diffColuna == 1 || diffColuna == -1) && (diffLinha == 2 || diffLinha == -2)) 
             ehAdequado = true;
-        else if ( (diffLinha == 1 || diffLinha == -1) && (diffColuna == 2 || diffColuna == -2) )
+        else if((diffLinha == 1 || diffLinha == -1) && (diffColuna == 2 || diffColuna == -2))
             ehAdequado = true;
         return ehAdequado;
     }    
