@@ -28,4 +28,8 @@ public class Jogador {
         }
         System.out.println("");
     }
+
+    public String infoJogadorString() {
+        return (this.nome + "\n" + this.cor + "\n");
+    }
 }

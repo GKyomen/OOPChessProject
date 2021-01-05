@@ -29,14 +29,30 @@ public class Tabuleiro {
         for(Posicao[] linha : this.posicoes) {
             for(Posicao posicao : linha) {
                 if(posicao.getOcupada()) 
-                System.out.print(" " + posicao.getPeca().desenho() + " ");
+                    System.out.print(" " + posicao.getPeca().desenho() + " ");
                 else
                     System.out.print("    ");
-                }
-                System.out.println(" " + i + "\n");
-                i--;
             }
+            System.out.println(" " + i + "\n");
+            i--;    
         }
+    }
+
+    //sobrescreve o toString para poder salvar o jogo numa determinada jogada
+    @Override
+    public String toString() {
+        String tabuleiro = "";
+        for(Posicao[] linha : this.posicoes) {
+            for(Posicao posicao : linha) {
+                if(posicao.getOcupada())
+                    tabuleiro = tabuleiro + posicao.getPeca().desenho();
+                else
+                    tabuleiro = tabuleiro + "  ";
+            }
+            tabuleiro = tabuleiro + "\n";
+        }
+        return tabuleiro;
+    }
 
     //verifica se uma posição está dentro do tabuleiro
     public boolean checaPosicao(int linha, int coluna) {

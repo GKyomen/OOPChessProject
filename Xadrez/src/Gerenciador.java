@@ -28,6 +28,7 @@ public class Gerenciador {
                         Jogo jogo = new Jogo();
                         jogo.carregaJogo();
                         System.out.println("Obrigado por utilizar o gerenciador");
+                        break gerenciador;
                     case 3: //opcao de sair
                         System.out.println("Obrigado por utilizar o gerenciador");
                         break gerenciador;
@@ -36,7 +37,7 @@ public class Gerenciador {
                         break;
                 }
             } catch(InputMismatchException | NumberFormatException e) { //caso tenha sido inserido algo que não é um inteiro
-                System.out.println("Entrada inválida. Insira um número inteiro, por favor.\n"); //avisa e tenta novamente
+                System.out.println("Entrada inválida. Insira um número inteiro, por favor."); //avisa e tenta novamente
             }
             
         }
