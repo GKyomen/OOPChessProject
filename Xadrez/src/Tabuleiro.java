@@ -69,6 +69,9 @@ public class Tabuleiro {
         //calcula as variações de linha e coluna
         int deltaL = lFim - lInicio, deltaC = cFim - cInicio;
 
+        if(deltaC == 0 && deltaL == 0)
+            return "n";
+
         if(deltaC == 0 && deltaL != 0) { //caso vertical
             if(deltaL < 0) //para baixo
                 return "vd";
@@ -486,12 +489,32 @@ public class Tabuleiro {
     //essa função não é muito eficiente... tentar pensar em uma maneira melhor
     //simula uma jogada e verifica se o estado do jogo não é mais xeque (nem xeque-mate)
     private boolean saiuDoXeque(Posicao origem, Posicao destino, String corPeca, String corAtacante) {
-        //copia o tabuleiro inteiro no estado atual
+        //copia o tabuleiro inteiro (faz copias das peças também) no estado atual
         Posicao[][] tabuleiroAux = new Posicao[8][8];
-        for (int i = 0; i < 8; i++) 
-            for (int j = 0; j < 8; j++) 
-                tabuleiroAux[i][j] = this.posicoes[i][j];
-
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                tabuleiroAux[i][j] = new Posicao(this.posicoes[i][j].getLinha(), this.posicoes[i][j].getColuna());
+                if(this.posicoes[i][j].getOcupada()) {
+                    tabuleiroAux[i][j].setOcupada(true);
+                    if(this.posicoes[i][j].getPeca() instanceof Peao) {
+                        tabuleiroAux[i][j].setPeca(new Peao(this.posicoes[i][j].getPeca().getCor()));
+                    }else if(this.posicoes[i][j].getPeca() instanceof Torre) {
+                        tabuleiroAux[i][j].setPeca(new Torre(this.posicoes[i][j].getPeca().getCor()));
+                    }else if(this.posicoes[i][j].getPeca() instanceof Cavalo) {
+                        tabuleiroAux[i][j].setPeca(new Cavalo(this.posicoes[i][j].getPeca().getCor()));
+                    }else if(this.posicoes[i][j].getPeca() instanceof Bispo) {
+                        tabuleiroAux[i][j].setPeca(new Bispo(this.posicoes[i][j].getPeca().getCor()));
+                    }else if(this.posicoes[i][j].getPeca() instanceof Dama) {
+                        tabuleiroAux[i][j].setPeca(new Dama(this.posicoes[i][j].getPeca().getCor()));
+                    }else {
+                        tabuleiroAux[i][j].setPeca(new Rei(this.posicoes[i][j].getPeca().getCor()));
+                    }
+                } else {
+                    tabuleiroAux[i][j].setOcupada(false);
+                    tabuleiroAux[i][j].setPeca(null);
+                }
+            }
+        }
         //salva as posições recebidas só que no tabuleiro auxiliar
         Posicao simOrigem = tabuleiroAux[8 - origem.getLinha()][(int) (origem.getColuna() - 'a')];
         Posicao simDestino = tabuleiroAux[8 - destino.getLinha()][(int) (destino.getColuna() - 'a')];
@@ -500,7 +523,7 @@ public class Tabuleiro {
         movePeca(simOrigem, simDestino, corPeca);
         
         //retorna se o jogo saiu do xeque
-        return verificaXeque(corAtacante, procuraRei(corPeca, tabuleiroAux), tabuleiroAux);
+        return verificaXeque(corAtacante, procuraRei(corPeca, tabuleiroAux), tabuleiroAux) == false;
     }
 
     //realiza um movimento caso seja possível

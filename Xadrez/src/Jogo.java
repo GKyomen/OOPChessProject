@@ -7,6 +7,12 @@ public class Jogo {
     private Jogador jogadores[] = new Jogador[2];
     private boolean ehVezDoJogador1;
 
+    public Jogo() {
+        this.estadoDoJogo = -1;
+        this.tabuleiro = null;
+        this.ehVezDoJogador1 = false;
+    }
+
     public Jogo(String jBrancas, String jPretas) {
         this.iniciaJogo(jBrancas, jPretas);
         this.jogar();
@@ -132,4 +138,7 @@ public class Jogo {
     public boolean getEhVezDoJogador1() {
         return this.ehVezDoJogador1;
     }
+
+	public void carregaJogo() {
+	}
 }
