@@ -36,7 +36,7 @@ public class Gerenciador {
                         System.out.println("Opção inválida, por favor digite sua Opção novamente.");
                         break;
                 }
-            } catch(InputMismatchException | NumberFormatException e) { //caso tenha sido inserido algo que não é um inteiro
+            } catch(InputMismatchException | NumberFormatException | StringIndexOutOfBoundsException e) { //caso tenha sido inserido algo que não é um inteiro
                 System.out.println("Entrada inválida. Insira um número inteiro, por favor."); //avisa e tenta novamente
             }
             

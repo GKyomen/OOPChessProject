@@ -11,12 +11,24 @@ public class Jogador {
             this.cor = "preto";
     }
 
-    public String getNome() {
+    public Jogador(String nome, int nJogador) {
+        this.nome = nome;
+        if(nJogador == 1)
+            this.cor = "branco";
+        else
+            this.cor = "preto";
+	}
+
+	public String getNome() {
         return this.nome;
     }
 
     public String getCor() {
         return this.cor;
+    }
+
+    public void setPecas(Peca pecas[]) {
+        this.pecas = pecas;
     }
 
     public void infoJogador() {
@@ -27,9 +39,5 @@ public class Jogador {
             System.out.print(peca.desenho() + "  ");
         }
         System.out.println("");
-    }
-
-    public String infoJogadorString() {
-        return (this.nome + "\n" + this.cor + "\n");
     }
 }

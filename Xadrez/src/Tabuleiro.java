@@ -1,8 +1,41 @@
 public class Tabuleiro {
     private final Posicao[][] posicoes = new Posicao[8][8]; 
 
-    public Tabuleiro(Peca pecas[]) {
-        inicializaTabuleiro(pecas);
+    public Tabuleiro(Peca pecas[], Jogador jogadores[]) { //construtor usado para retomar um jogo, recebe 64 peças (mínimo 32 nulas) e salva as peças nos jogadores
+        char coluna;
+        int linha, nPeca = 0, nBrancas = 0, nPretas = 0;
+        Peca brancas[] = new Peca[16], pretas[] = new Peca[16];  //cria os vetores de peça dos jogadores
+        //cria as posicoes com as caracteristicas corretas
+        for(int i = 0; i < 8; i++) {
+            linha = 8 - i;
+            for(int j = 0; j < 8; j++) {
+                coluna = (char) (j + 'a'); //usando ASCII para saber a letra da coluna
+                this.posicoes[i][j] = new Posicao(linha, coluna); //cria a posicao
+                if(pecas[nPeca++] == null) { //se a peça existir, marca posição ocupada e guarda a peça, senão guarda nulo mesmo
+                    this.posicoes[i][j].setOcupada(false);
+                    this.posicoes[i][j].setPeca(pecas[nPeca]);
+                } else {
+                    this.posicoes[i][j].setOcupada(true);
+                    this.posicoes[i][j].setPeca(pecas[nPeca]);
+                }
+            }
+        }
+        //separa as pecas brancas e pretas
+        for(Peca peca : pecas) {
+            if(peca != null) { //se tem uma peça
+                if(peca.getCor() == "branco") //se é branca
+                    brancas[nBrancas++] = peca; //salva nas brancas
+                else //se é preta
+                    pretas[nPretas++] = peca; //salva nas pretas
+            }
+        }
+        //passa para os jogadores
+        jogadores[0].setPecas(brancas);
+        jogadores[1].setPecas(pretas);
+    }
+
+    public Tabuleiro(Peca pecas[]) { //construtor usado no caso de jogo do 0
+        inicializaTabuleiro(pecas); //inicializa as posicoes com as peças nos locais iniciais
     }
 
     //inicia as posições do tabuleiro com as peças no devido lugar
@@ -14,7 +47,7 @@ public class Tabuleiro {
             for(int j = 0; j < 8; j++) {
                 coluna = (char) (j + 'a'); //usando ASCII para saber a letra da coluna
                 this.posicoes[i][j] = new Posicao(linha, coluna);
-                if(i == 0 || i == 1 || i == 6 || i == 7) {
+                if(i == 0 || i == 1 || i == 6 || i == 7) { //marca ocupada nas 1as e ultimas linhas, colocando a peça
                     this.posicoes[i][j].setOcupada(true);
                     this.posicoes[i][j].setPeca(pecas[nPeca++]);
                 }
