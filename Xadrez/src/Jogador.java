@@ -1,3 +1,7 @@
+/*
+Feito por Gabriel da Silva Kyomen
+771008
+*/
 public class Jogador {
     private String nome, cor;
     private Peca pecas[];
@@ -11,12 +15,24 @@ public class Jogador {
             this.cor = "preto";
     }
 
-    public String getNome() {
+    public Jogador(String nome, int nJogador) {
+        this.nome = nome;
+        if(nJogador == 1)
+            this.cor = "branco";
+        else
+            this.cor = "preto";
+	}
+
+	public String getNome() {
         return this.nome;
     }
 
     public String getCor() {
         return this.cor;
+    }
+
+    public void setPecas(Peca pecas[]) {
+        this.pecas = pecas;
     }
 
     public void infoJogador() {

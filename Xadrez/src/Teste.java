@@ -1,3 +1,7 @@
+/*
+Feito por Gabriel da Silva Kyomen
+771008
+*/
 public class Teste {
     public static void main(String[] args) {
         /* Jogo jogo1 = new Jogo(true);

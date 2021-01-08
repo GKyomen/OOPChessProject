@@ -1,3 +1,7 @@
+/*
+Feito por Gabriel da Silva Kyomen
+771008
+*/
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -28,6 +32,7 @@ public class Gerenciador {
                         Jogo jogo = new Jogo();
                         jogo.carregaJogo();
                         System.out.println("Obrigado por utilizar o gerenciador");
+                        break gerenciador;
                     case 3: //opcao de sair
                         System.out.println("Obrigado por utilizar o gerenciador");
                         break gerenciador;
@@ -35,8 +40,8 @@ public class Gerenciador {
                         System.out.println("Opção inválida, por favor digite sua Opção novamente.");
                         break;
                 }
-            } catch(InputMismatchException | NumberFormatException e) { //caso tenha sido inserido algo que não é um inteiro
-                System.out.println("Entrada inválida. Insira um número inteiro, por favor.\n"); //avisa e tenta novamente
+            } catch(InputMismatchException | NumberFormatException | StringIndexOutOfBoundsException e) { //caso tenha sido inserido algo que não é um inteiro
+                System.out.println("Entrada inválida. Insira um número inteiro, por favor."); //avisa e tenta novamente
             }
             
         }
