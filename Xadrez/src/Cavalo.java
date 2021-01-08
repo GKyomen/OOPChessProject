@@ -1,3 +1,7 @@
+/*
+Feito por Gabriel da Silva Kyomen
+771008
+*/
 public class Cavalo extends Peca {
 
     public Cavalo(String cor) {

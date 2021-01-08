@@ -1,3 +1,7 @@
+/*
+Feito por Gabriel da Silva Kyomen
+771008
+*/
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

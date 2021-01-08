@@ -1,3 +1,7 @@
+/*
+Feito por Gabriel da Silva Kyomen
+771008
+*/
 public class Rei extends Peca {
     
     public Rei(String cor) {

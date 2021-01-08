@@ -1,3 +1,7 @@
+/*
+Feito por Gabriel da Silva Kyomen
+771008
+*/
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -108,7 +112,7 @@ public class Jogo {
             System.out.println("informe q2q2 para salvar a partida no ponto atual e sair.");
 
             do{ //pede uma jogada até que ela seja válida
-                coord = teclado.nextLine();
+                coord = teclado.next();
 
                 try { //tenta transformar as coordenadas em colunas e linhas, e então realizar a jogada
                     colunaOrigem = coord.charAt(0);
@@ -136,6 +140,9 @@ public class Jogo {
                         }
                     //caso seja solicitado para salvar o jogo e sair, salva as informações e sai
                     } else if(colunaOrigem == 'q' && colunaDestino == 'q' && linhaOrigem == 2 && linhaDestino == 2) {
+                        if(solicitouEmpate == 1) { //se havia sido solicitado o empate, significa que o jogador anterior não tinha jogado.
+                            this.ehVezDoJogador1 = !this.ehVezDoJogador1;
+                        }
                         salvarJogo();
                         break jogo;
                     //se foi uma jogada normal e tinha sido solicitado empate antes, nega a solicitação
@@ -235,62 +242,62 @@ public class Jogo {
 
                                         case "P+": //peao branco
                                             pecas[nPeca++] = new Peao("branco"); //cria e salva peao branco
-                                            this.pecas[nPecaAtiva++] = pecas[nPeca]; //salva no vetor de peças do jogo
+                                            this.pecas[nPecaAtiva++] = pecas[nPeca - 1]; //salva no vetor de peças do jogo
                                             break;
 
                                         case "P-": //peao preto
                                             pecas[nPeca++] = new Peao("preto"); //cria e salva peao preto 
-                                            this.pecas[nPecaAtiva++] = pecas[nPeca]; //salva no vetor de peças do jogo
+                                            this.pecas[nPecaAtiva++] = pecas[nPeca - 1]; //salva no vetor de peças do jogo
                                             break;
 
                                         case "T+": //torre branca
                                             pecas[nPeca++] = new Torre("branco"); //cria e salva torre branca
-                                            this.pecas[nPecaAtiva++] = pecas[nPeca]; //salva no vetor de peças do jogo
+                                            this.pecas[nPecaAtiva++] = pecas[nPeca - 1]; //salva no vetor de peças do jogo
                                             break;
 
                                         case "T-": //torre preta
                                             pecas[nPeca++] = new Torre("preto"); //cria e salva torre preta
-                                            this.pecas[nPecaAtiva++] = pecas[nPeca]; //salva no vetor de peças do jogo
+                                            this.pecas[nPecaAtiva++] = pecas[nPeca - 1]; //salva no vetor de peças do jogo
                                             break;
 
                                         case "C+": //cavalo branco
                                             pecas[nPeca++] = new Cavalo("branco"); //cria e salva cavalo branco
-                                            this.pecas[nPecaAtiva++] = pecas[nPeca]; //salva no vetor de peças do jogo
+                                            this.pecas[nPecaAtiva++] = pecas[nPeca - 1]; //salva no vetor de peças do jogo
                                             break;
 
                                         case "C-": //cavalo preto
                                             pecas[nPeca++] = new Cavalo("preto"); //cria e salva cavalo preto
-                                            this.pecas[nPecaAtiva++] = pecas[nPeca]; //salva no vetor de peças do jogo
+                                            this.pecas[nPecaAtiva++] = pecas[nPeca - 1]; //salva no vetor de peças do jogo
                                             break;
 
                                         case "B+": //bispo branco
                                             pecas[nPeca++] = new Bispo("branco"); //cria e salva bispo branco
-                                            this.pecas[nPecaAtiva++] = pecas[nPeca]; //salva no vetor de peças do jogo
+                                            this.pecas[nPecaAtiva++] = pecas[nPeca - 1]; //salva no vetor de peças do jogo
                                             break;
 
                                         case "B-": //bispo preto
                                             pecas[nPeca++] = new Bispo("preto"); //cria e salva bispo preto
-                                            this.pecas[nPecaAtiva++] = pecas[nPeca]; //salva no vetor de peças do jogo
+                                            this.pecas[nPecaAtiva++] = pecas[nPeca - 1]; //salva no vetor de peças do jogo
                                             break;
                                         
                                         case "D+": //dama branca
                                             pecas[nPeca++] = new Dama("branco"); //cria e salva dama branca
-                                            this.pecas[nPecaAtiva++] = pecas[nPeca]; //salva no vetor de peças do jogo
+                                            this.pecas[nPecaAtiva++] = pecas[nPeca - 1]; //salva no vetor de peças do jogo
                                             break;
 
                                         case "D-": //dama preta
                                             pecas[nPeca++] = new Dama("preto"); //cria e salva dama preta
-                                            this.pecas[nPecaAtiva++] = pecas[nPeca]; //salva no vetor de peças do jogo
+                                            this.pecas[nPecaAtiva++] = pecas[nPeca - 1]; //salva no vetor de peças do jogo
                                             break;
 
                                         case "R+": //rei branco
                                             pecas[nPeca++] = new Rei("branco"); //cria e salva rei branco 
-                                            this.pecas[nPecaAtiva++] = pecas[nPeca]; //salva no vetor de peças do jogo
+                                            this.pecas[nPecaAtiva++] = pecas[nPeca - 1]; //salva no vetor de peças do jogo
                                             break;
 
                                         case "R-": //rei preto
                                             pecas[nPeca++] = new Rei("preto"); //cria e salva rei preto
-                                            this.pecas[nPecaAtiva++] = pecas[nPeca]; //salva no vetor de peças do jogo
+                                            this.pecas[nPecaAtiva++] = pecas[nPeca - 1]; //salva no vetor de peças do jogo
                                             break;
                                     }
                                 }
@@ -308,6 +315,7 @@ public class Jogo {
                 System.out.println("Ocorreu um erro. Tente novamente.");
             }
         }
+        jogar();
         sc.close();
     }
     

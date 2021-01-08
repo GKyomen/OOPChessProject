@@ -1,3 +1,7 @@
+/*
+Feito por Gabriel da Silva Kyomen
+771008
+*/
 public class Peao extends Peca{
     
     public Peao(String cor) {

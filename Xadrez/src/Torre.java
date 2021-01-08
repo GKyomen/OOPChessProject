@@ -1,3 +1,7 @@
+/*
+Feito por Gabriel da Silva Kyomen
+771008
+*/
 public class Torre extends Peca {
     
     public Torre(String cor) {

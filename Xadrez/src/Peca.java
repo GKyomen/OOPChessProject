@@ -1,3 +1,7 @@
+/*
+Feito por Gabriel da Silva Kyomen
+771008
+*/
 public abstract class Peca {
     private String cor;
     private boolean status;

@@ -1,3 +1,7 @@
+/*
+Feito por Gabriel da Silva Kyomen
+771008
+*/
 public class Tabuleiro {
     private final Posicao[][] posicoes = new Posicao[8][8]; 
 
@@ -11,12 +15,12 @@ public class Tabuleiro {
             for(int j = 0; j < 8; j++) {
                 coluna = (char) (j + 'a'); //usando ASCII para saber a letra da coluna
                 this.posicoes[i][j] = new Posicao(linha, coluna); //cria a posicao
-                if(pecas[nPeca++] == null) { //se a peça existir, marca posição ocupada e guarda a peça, senão guarda nulo mesmo
+                if(pecas[nPeca] == null) { //se a peça existir, marca posição ocupada e guarda a peça, senão guarda nulo mesmo
                     this.posicoes[i][j].setOcupada(false);
-                    this.posicoes[i][j].setPeca(pecas[nPeca]);
+                    this.posicoes[i][j].setPeca(pecas[nPeca++]);
                 } else {
                     this.posicoes[i][j].setOcupada(true);
-                    this.posicoes[i][j].setPeca(pecas[nPeca]);
+                    this.posicoes[i][j].setPeca(pecas[nPeca++]);
                 }
             }
         }
@@ -307,84 +311,160 @@ public class Tabuleiro {
         switch(direcao) {
             case "hd":
                 for(int i = col + 1; i < 8; i++) {
-                    if(posicoes[lin][i].getOcupada()) {
-                        if(posicoes[lin][i].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(posicoes[lin][i].getPeca(), direcao))
-                                return true;
-
+                    Posicao pos = posicoes[lin][i];
+                    if(pos.getOcupada()) {
+                        if(pos.getPeca().getCor() == corAtacante) {
+                            if(atacaNaDirecao(pos.getPeca(), direcao)) {
+                                int dLinha = p.getLinha() - pos.getLinha();
+                                int colP = (int) (p.getColuna() - 'a'), colPos = (int) (pos.getColuna() - 'a');
+                                int dColuna = colP - colPos;
+                                //se é um peão e é uma linha de diferença ou se não é um peão
+                                if((pos.getPeca() instanceof Peao && (dLinha == 1 || dLinha == -1)) || !(pos.getPeca() instanceof Peao))
+                                    //se é um rei e tem no máximo uma casa de distância ou se não é um rei
+                                    if((pos.getPeca() instanceof Rei && ((dLinha == 1 || dLinha == 0 || dLinha == -1) && (dColuna == 1 || dColuna == 0 || dColuna == -1))) || !(pos.getPeca() instanceof Rei)) 
+                                        return true;
+                            }
+                        }
                         break;
                     }
                 }
                 return false;
             case "he":
                 for(int i = col - 1; i >= 0; i--) {
-                    if(posicoes[lin][i].getOcupada()) {
-                        if(posicoes[lin][i].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(posicoes[lin][i].getPeca(), direcao))
-                                return true;
-
+                    Posicao pos = posicoes[lin][i];
+                    if(pos.getOcupada()) {
+                        if(pos.getPeca().getCor() == corAtacante) {
+                            if(atacaNaDirecao(pos.getPeca(), direcao)) {
+                                int dLinha = p.getLinha() - pos.getLinha();
+                                int colP = (int) (p.getColuna() - 'a'), colPos = (int) (pos.getColuna() - 'a');
+                                int dColuna = colP - colPos;
+                                //se é um peão e é uma linha de diferença ou se não é um peão
+                                if((pos.getPeca() instanceof Peao && (dLinha == 1 || dLinha == -1)) || !(pos.getPeca() instanceof Peao))
+                                    //se é um rei e tem no máximo uma casa de distância ou se não é um rei
+                                    if((pos.getPeca() instanceof Rei && ((dLinha == 1 || dLinha == 0 || dLinha == -1) && (dColuna == 1 || dColuna == 0 || dColuna == -1))) || !(pos.getPeca() instanceof Rei)) 
+                                        return true;
+                            }
+                        }
                         break;
                     }
                 }
                 return false;
             case "vd":
                 for(int i = lin + 1; i < 8; i++) {
-                    if(posicoes[i][col].getOcupada()) {
-                        if(posicoes[i][col].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(posicoes[i][col].getPeca(), direcao))
-                                return true;
-
+                    Posicao pos = posicoes[i][col];
+                    if(pos.getOcupada()) {
+                        if(pos.getPeca().getCor() == corAtacante) {
+                            if(atacaNaDirecao(pos.getPeca(), direcao)) {
+                                int dLinha = p.getLinha() - pos.getLinha();
+                                int colP = (int) (p.getColuna() - 'a'), colPos = (int) (pos.getColuna() - 'a');
+                                int dColuna = colP - colPos;
+                                //se é um peão e é uma linha de diferença ou se não é um peão
+                                if((pos.getPeca() instanceof Peao && (dLinha == 1 || dLinha == -1)) || !(pos.getPeca() instanceof Peao))
+                                    //se é um rei e tem no máximo uma casa de distância ou se não é um rei
+                                    if((pos.getPeca() instanceof Rei && ((dLinha == 1 || dLinha == 0 || dLinha == -1) && (dColuna == 1 || dColuna == 0 || dColuna == -1))) || !(pos.getPeca() instanceof Rei)) 
+                                        return true;
+                            }
+                        }
                         break;
                     }
                 }
                 return false;
             case "vs":
                 for(int i = lin - 1; i >= 0; i--) {
-                    if(posicoes[i][col].getOcupada()) {
-                        if(posicoes[i][col].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(posicoes[i][col].getPeca(), direcao))
-                                return true;
-
+                    Posicao pos = posicoes[i][col];
+                    if(pos.getOcupada()) {
+                        if(pos.getPeca().getCor() == corAtacante) {
+                            if(atacaNaDirecao(pos.getPeca(), direcao)) {
+                                int dLinha = p.getLinha() - pos.getLinha();
+                                int colP = (int) (p.getColuna() - 'a'), colPos = (int) (pos.getColuna() - 'a');
+                                int dColuna = colP - colPos;
+                                //se é um peão e é uma linha de diferença ou se não é um peão
+                                if((pos.getPeca() instanceof Peao && (dLinha == 1 || dLinha == -1)) || !(pos.getPeca() instanceof Peao))
+                                    //se é um rei e tem no máximo uma casa de distância ou se não é um rei
+                                    if((pos.getPeca() instanceof Rei && ((dLinha == 1 || dLinha == 0 || dLinha == -1) && (dColuna == 1 || dColuna == 0 || dColuna == -1))) || !(pos.getPeca() instanceof Rei)) 
+                                        return true;
+                            }
+                        }
                         break;
                     }
                 }
                 return false;
             case "ds":
                 for(int i = lin - 1, j = col + 1; i >= 0 && j < 8; i--, j++) {
-                    if(posicoes[i][j].getOcupada()) {
-                        if(posicoes[i][j].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(posicoes[i][j].getPeca(), direcao))
-                                return true;
+                    Posicao pos = posicoes[i][j];
+                    if(pos.getOcupada()) {
+                        if(pos.getPeca().getCor() == corAtacante) {
+                            if(atacaNaDirecao(pos.getPeca(), direcao)) {
+                                int dLinha = p.getLinha() - pos.getLinha();
+                                int colP = (int) (p.getColuna() - 'a'), colPos = (int) (pos.getColuna() - 'a');
+                                int dColuna = colP - colPos;
+                                //se é um peão e é uma linha de diferença ou se não é um peão
+                                if((pos.getPeca() instanceof Peao && (dLinha == 1 || dLinha == -1)) || !(pos.getPeca() instanceof Peao))
+                                    //se é um rei e tem no máximo uma casa de distância ou se não é um rei
+                                    if((pos.getPeca() instanceof Rei && ((dLinha == 1 || dLinha == 0 || dLinha == -1) && (dColuna == 1 || dColuna == 0 || dColuna == -1))) || !(pos.getPeca() instanceof Rei)) 
+                                        return true;
+                            }
+                        }
                         break;
                     }
                 }
                 return false;
             case "dd":
                 for(int i = lin + 1, j = col + 1; i < 8 && j < 8; i++, j++) {
-                    if(posicoes[i][j].getOcupada()) {
-                        if(posicoes[i][j].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(posicoes[i][j].getPeca(), direcao))
-                                return true;
+                    Posicao pos = posicoes[i][j];
+                    if(pos.getOcupada()) {
+                        if(pos.getPeca().getCor() == corAtacante) {
+                            if(atacaNaDirecao(pos.getPeca(), direcao)) {
+                                int dLinha = p.getLinha() - pos.getLinha();
+                                int colP = (int) (p.getColuna() - 'a'), colPos = (int) (pos.getColuna() - 'a');
+                                int dColuna = colP - colPos;
+                                //se é um peão e é uma linha de diferença ou se não é um peão
+                                if((pos.getPeca() instanceof Peao && (dLinha == 1 || dLinha == -1)) || !(pos.getPeca() instanceof Peao))
+                                    //se é um rei e tem no máximo uma casa de distância ou se não é um rei
+                                    if((pos.getPeca() instanceof Rei && ((dLinha == 1 || dLinha == 0 || dLinha == -1) && (dColuna == 1 || dColuna == 0 || dColuna == -1))) || !(pos.getPeca() instanceof Rei)) 
+                                        return true;
+                            }
+                        }
                         break;
                     }
                 }
                 return false;
             case "es":
                 for(int i = lin - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-                    if(posicoes[i][j].getOcupada()) {
-                        if(posicoes[i][j].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(posicoes[i][j].getPeca(), direcao))
-                                return true;
+                    Posicao pos = posicoes[i][j];
+                    if(pos.getOcupada()) {
+                        if(pos.getPeca().getCor() == corAtacante) {
+                            if(atacaNaDirecao(pos.getPeca(), direcao)) {
+                                int dLinha = p.getLinha() - pos.getLinha();
+                                int colP = (int) (p.getColuna() - 'a'), colPos = (int) (pos.getColuna() - 'a');
+                                int dColuna = colP - colPos;
+                                //se é um peão e é uma linha de diferença ou se não é um peão
+                                if((pos.getPeca() instanceof Peao && (dLinha == 1 || dLinha == -1)) || !(pos.getPeca() instanceof Peao))
+                                    //se é um rei e tem no máximo uma casa de distância ou se não é um rei
+                                    if((pos.getPeca() instanceof Rei && ((dLinha == 1 || dLinha == 0 || dLinha == -1) && (dColuna == 1 || dColuna == 0 || dColuna == -1))) || !(pos.getPeca() instanceof Rei)) 
+                                        return true;
+                            }
+                        }
                         break;
                     }
                 }
                 return false;
             case "ed":
                 for(int i = lin + 1, j = col - 1; i < 8 && j >= 0; i++, j--) {
-                    if(posicoes[i][j].getOcupada()) {
-                        if(posicoes[i][j].getPeca().getCor() == corAtacante)
-                            if(atacaNaDirecao(posicoes[i][j].getPeca(), direcao))
-                                return true;
+                    Posicao pos = posicoes[i][j];
+                    if(pos.getOcupada()) {
+                        if(pos.getPeca().getCor() == corAtacante) {
+                            if(atacaNaDirecao(pos.getPeca(), direcao)) {
+                                int dLinha = p.getLinha() - pos.getLinha();
+                                int colP = (int) (p.getColuna() - 'a'), colPos = (int) (pos.getColuna() - 'a');
+                                int dColuna = colP - colPos;
+                                //se é um peão e é uma linha de diferença ou se não é um peão
+                                if((pos.getPeca() instanceof Peao && (dLinha == 1 || dLinha == -1)) || !(pos.getPeca() instanceof Peao))
+                                    //se é um rei e tem no máximo uma casa de distância ou se não é um rei
+                                    if((pos.getPeca() instanceof Rei && ((dLinha == 1 || dLinha == 0 || dLinha == -1) && (dColuna == 1 || dColuna == 0 || dColuna == -1))) || !(pos.getPeca() instanceof Rei)) 
+                                        return true;
+                            }
+                        }
                         break;
                     }
                 }
